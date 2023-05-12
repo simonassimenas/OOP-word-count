@@ -5,7 +5,6 @@
 #include <regex>
 #include <map>
 #include <set>
-#include <cctype>
 
 using namespace std;
 
@@ -69,8 +68,6 @@ int main() {
             while (!word.empty() && !isalpha(word[word.length() - 1], locale("lt_LT.UTF-8"))) {
                 word.erase(word.length() - 1, 1);
             }
-
-            //transform(word.begin(), word.end(), word.begin(), ::tolower);
 
             wordCount[word]++;
             wordLines[word].insert(lineNum);
