@@ -5,6 +5,7 @@
 #include <regex>
 #include <map>
 #include <set>
+#include <cctype>
 
 using namespace std;
 
@@ -38,6 +39,8 @@ int main() {
         urls.insert(it->str());
     }
 
+
+    // ==URL OUTPUT==
     outputFile << "URL's in the presented text: " << "\n";
     for (const auto& url : urls) {
         outputFile << url << "\n";
@@ -60,10 +63,10 @@ int main() {
         
         while (ss >> word) {
             // reikia padaryti kad neimtu simboliu bet paimtu lietuviskas raides
-            while (!word.empty() && !isalpha(word[0])) {
+            while (!word.empty() && !isalpha(word[0], locale("lt_LT.UTF-8"))) {
                 word.erase(0, 1);
             }
-            while (!word.empty() && !isalpha(word[word.length() - 1])) {
+            while (!word.empty() && !isalpha(word[word.length() - 1], locale("lt_LT.UTF-8"))) {
                 word.erase(word.length() - 1, 1);
             }
 
@@ -74,18 +77,26 @@ int main() {
         }
     }
 
-    // Output word count and line numbers
+
+    // ==CROSS-REFERENCE TABLE OUTPUT==
+    outputFile << "Cross-reference table:\n" <<
+                setw(30) << fixed << left << "Word" <<
+                setw(10) << fixed << left << "Count" <<
+                " References\n" << string(53, '-') << "\n";
+
     for (const auto& word : wordCount) {
         if (word.second > 1) {
+            string wordCapitalized = word.first;
+            wordCapitalized[0] = toupper(wordCapitalized[0]);
 
-            //string word = kv.first;
-            //word[0] = toupper(word[0]);
+            outputFile << setw(30) << fixed << left << wordCapitalized <<
+                        setw(11) << fixed << left << word.second <<
+                        "Lines:";
 
-            outputFile << word.first << " " << word.second << " (lines:";
             for (int line : wordLines[word.first]) {
                 outputFile << " " << line;
             }
-            outputFile << ")" << endl;
+            outputFile << "\n";
         }
     }
 
