@@ -2,8 +2,9 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <regex>
+#include <cctype>
 #include <locale>
+#include <regex>
 #include <map>
 #include <set>
 
