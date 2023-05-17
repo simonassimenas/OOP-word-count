@@ -34,7 +34,7 @@ int main() {
     textStream << inputFile.rdbuf();
     wstring text = textStream.str();
 
-    wregex url_pattern(L"(https?://)?(www\\.)?[a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)*\\.[a-zA-Z]+(/[a-zA-Z0-9]*)*");
+    wregex url_pattern(L"(https?://)?(www\\.)?[a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)*\\.[a-zA-Z]+(/[a-zA-Z0-9]*)*(?!\\w)");
 
     wsregex_iterator it(text.begin(), text.end(), url_pattern);
     wsregex_iterator end;
